@@ -1,0 +1,10 @@
+ckpt
+data
+des
+images
+llava
+logs
+pref
+sbatch_output
+stic
+wandb

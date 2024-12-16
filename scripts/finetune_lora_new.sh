@@ -1,14 +1,4 @@
 #!/bin/bash
-#SBATCH --job-name=lora # Job name
-#SBATCH --output=logs/lora_image_description_pros_new_baseline.txt # Standard output and error.
-#SBATCH --nodes=1 # Run all processes on a single node
-#SBATCH --ntasks=4 # Run on a single CPU
-#SBATCH --mem=200G # Total RAM to be used
-#SBATCH --cpus-per-task=64 # Number of CPU cores
-#SBATCH --gres=gpu:4 # Number of GPUs (per node)
-#SBATCH -p cscc-gpu-p # Use the gpu partition
-#SBATCH --time=12:00:00 # Specify the time needed for you job
-#SBATCH -q cscc-gpu-qos # To enable the use of up to 8 GPUs
 
 
 deepspeed --include=localhost:0,1,2,3 llava/train/train_mem.py \

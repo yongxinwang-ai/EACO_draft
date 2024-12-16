@@ -1,21 +1,12 @@
 #!/bin/bash
-#SBATCH --job-name=lora # Job name
-#SBATCH --output=logs/lora_vicuna.txt # Standard output and error.
-#SBATCH --nodes=1 # Run all processes on a single node
-#SBATCH --ntasks=4 # Run on a single CPU
-#SBATCH --mem=200G # Total RAM to be used
-#SBATCH --cpus-per-task=64 # Number of CPU cores
-#SBATCH --gres=gpu:4 # Number of GPUs (per node)
-#SBATCH -p cscc-gpu-p # Use the gpu partition
-#SBATCH --time=12:00:00 # Specify the time needed for you job
-#SBATCH -q cscc-gpu-qos # To enable the use of up to 8 GPUs
+
 
 
 deepspeed --include=localhost:0,1,2,3 llava/train/train_mem.py \
     --deepspeed ./scripts/zero2.json \
     --lora_enable True --lora_r 128 --lora_alpha 256 --mm_projector_lr 2e-5 \
-    --model_name_or_path liuhaotian/llava-v1.6-vicuna-7b \
-    --load_peft /l/users/yongxin.wang/code/STIC/ckpt/llava-v1.6-vicuna-7b-stage1-judge_lora \
+    --model_name_or_path liuhaotian/llava-v1.6-mistral-7b \
+    --load_peft path/to/ckpt \
     --version v1 \
     --data_path /l/users/yongxin.wang/code/STIC/data/image_description_new_vicuna.json \
     --image_folder /l/users/yongxin.wang/data \
